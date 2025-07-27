@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roheth Ramakrishnan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Star Animation */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            width: 2px;
+            height: 2px;
+            opacity: 0.8;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .animate-slide-right {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideInRight 1.5s ease-in-out forwards;
+        }
+
+        .animate-slide-left {
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInLeft 1.5s ease-in-out forwards;
+        }
+
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hover-pop:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen text-center px-6">
+    <!-- Background Animation -->
+    <div class="stars" id="star-container"></div>
+
+    <!-- Animated Text -->
+    <h1 class="text-6xl font-bold text-yellow-400 animate-slide-right" style="animation-delay: 0s;">
+        Roheth Ramakrishnan's
+        <br>
+        <span class="text-4xl text-white">Spam Detector</span>
+    </h1>
+    <p class="text-xl mt-4 animate-slide-left" style="animation-delay: 1s;">I made a tool to check if a mail is spam or not</p>
+    <p class="text-xl mt-2 animate-slide-right" style="animation-delay: 2s;">Want to check it out?</p>
+
+    <!-- Try Now Button -->
+    <a href="predict.html">
+        <button class="mt-6 px-6 py-3 bg-yellow-500 text-black text-lg rounded-lg shadow-lg hover:scale-105 hover-pop animate-slide-left" style="animation-delay: 3s;">
+            Try Now
+        </button>
+    </a>
+
+    <!-- About Me Section -->
+    <div class="mt-12 space-y-3 text-lg max-w-2xl animate-slide-right" style="animation-delay: 4s;">
+        <p>Hey I am Roheth Ramakrishnan, a Freshman at VIT Vellore.</p>
+        <p class="animate-slide-left" style="animation-delay: 4.2s;">I'm on my journey to explore the vast world of Computer Science.</p>
+        <p class="animate-slide-right" style="animation-delay: 4.4s;">This project is a blend of Machine Learning and Web Development,</p>
+        <p class="animate-slide-left" style="animation-delay: 4.6s;">two topics I am building knowledge in.</p>
+    </div>
+
+    <!-- Contact Line -->
+    <p class="mt-6 text-lg animate-slide-right" style="animation-delay: 4.8s;">Wanna Keep In Contact?</p>
+
+    <!-- Social Media Icons -->
+    <div class="mt-4 animate-slide-left flex space-x-12 text-3xl" style="animation-delay: 5s;">
+        <a href="https://www.linkedin.com/in/roheth-ramakrishnan" class="hover:text-yellow-500" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/roheth_286?igsh=MWZ4cGdsN21oNmRyOA==" class="hover:text-yellow-500" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://github.com/roheth286" class="hover:text-yellow-500" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </div>
+
+    <script>
+        // Starfield effect
+        function createStars() {
+            const container = document.getElementById("star-container");
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.animationDelay = Math.random() * 3 + "s";
+                container.appendChild(star);
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>

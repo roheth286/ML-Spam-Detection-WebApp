@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            width: 2px;
+            height: 2px;
+            opacity: 0.8;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .animate-slide-right {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideInRight 1.5s ease-in-out forwards;
+        }
+
+        .animate-slide-left {
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInLeft 1.5s ease-in-out forwards;
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen text-center px-6 space-y-10">
+    <div class="stars" id="star-container"></div>
+
+    <div class="space-y-3">
+        <h1 class="text-6xl font-bold text-yellow-400 animate-slide-right" style="animation-delay: 0s;">
+            The Spam Detector Model
+        </h1>
+        <p class="text-4xl text-white animate-slide-left" style="animation-delay: 1s;">
+            A very common application of Logistic Regression algorithm.
+        </p>
+        <p class="text-4xl text-white animate-slide-right" style="animation-delay: 2s;">
+            The model classifies emails as Spam or Ham.
+        </p>
+    </div>
+
+    <!-- Textarea for input -->
+    <textarea 
+        id="emailText" 
+        class="w-3/4 h-40 p-4 text-lg text-black rounded-lg shadow-lg animate-slide-left" 
+        placeholder="Enter the contents of your mail..." 
+        style="animation-delay: 3s;"></textarea>
+
+    <!-- Predict Button -->
+    <button 
+        onclick="predictSpam()" 
+        class="px-6 py-3 bg-yellow-500 text-black text-lg rounded-lg shadow-lg hover:scale-105 animate-slide-right" 
+        style="animation-delay: 4s;">
+        Predict
+    </button>
+
+    <!-- Display Prediction Result -->
+    <p id="predictionResult" class="text-3xl font-bold mt-4" style="display: none;">
+        <span id="resultLabel" class="text-white"></span>
+        <span id="predictionText"></span>
+    </p>
+
+    <script>
+        function createStars() {
+            const container = document.getElementById("star-container");
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.animationDelay = Math.random() * 3 + "s";
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        async function predictSpam() {
+            const text = document.getElementById("emailText").value.trim();
+            const predictionResultElement = document.getElementById("predictionResult");
+            const predictionTextElement = document.getElementById("predictionText");
+            const resultLabelElement = document.getElementById("resultLabel");
+
+            // Show result area
+            predictionResultElement.style.display = "block";
+
+            if (!text) {
+                // If no text, show the message in white
+                resultLabelElement.innerText = "Please Enter Text in the Textbox";
+                resultLabelElement.style.color = "white";
+                predictionTextElement.innerText = "";
+                return;
+            }
+
+            // Show predicting message
+            resultLabelElement.innerText = "Result:";
+            resultLabelElement.style.color = "white";
+            predictionTextElement.innerText = " Predicting...";
+            predictionTextElement.style.color = "white";
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: text }),
+                });
+
+                const data = await response.json();
+                setTimeout(() => {
+                    if (data.prediction) {
+                        const prediction = data.prediction.toUpperCase();
+                        predictionTextElement.innerText = prediction;
+                        predictionTextElement.style.color = prediction === "SPAM" ? "red" : "green";
+                    } else {
+                        predictionTextElement.innerText = "Error: Could not classify text.";
+                        predictionTextElement.style.color = "white";
+                    }
+                }, 1000);
+            } catch (error) {
+                predictionTextElement.innerText = "Error: Failed to connect to backend.";
+                predictionTextElement.style.color = "white";
+            }
+        }
+    </script>
+</body>
+</html>
