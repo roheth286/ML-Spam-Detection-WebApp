@@ -1,18 +1,28 @@
-# ML-Spam-Detection-WebApp
+# 📩 Spam Detector Web App (ML + Flask + Tailwind)
 
-# Spam Detection Web App 🚀
+Welcome to the Spam Detection Web App! This project is a simple yet complete machine learning web application that detects whether a given message is **spam** or **not spam (ham)** using a trained ML model.
 
-This is a simple and minimal web application that uses a trained Machine Learning model to detect whether a given message is spam or not. It combines a Flask-based backend with a clean HTML + Tailwind CSS frontend.
+> ⚠️ **Note:** The model is still being tuned and tested. So some predictions may be **iffy or inaccurate** as of now. It's a work in progress.
 
-## 🧠 About the Project
+---
 
-This project demonstrates the use of:
-- Natural Language Processing (NLP)
-- Machine Learning model (trained using Scikit-Learn)
-- Pickled model and vectorizer (`.pkl` files)
-- Flask API to serve predictions
-- TailwindCSS for styling
-- Frontend-backend integration
+## 🔧 Features
 
+- Clean, minimalistic UI using **Tailwind CSS**
+- Backend served via **Flask + Flask-RESTful API**
+- Text classified using a trained **TF-IDF vectorizer** + **Logistic Regression** model
+- You can input any message and the app will tell you if it's spam or not
+- Fully open source and ready to run locally
 
+---
 
+## 🛠️ Tech Stack
+
+| Layer        | Tech Used                      |
+| ------------ | ------------------------------ |
+| Frontend     | HTML5, Tailwind CSS, FontAwesome |
+| Backend      | Python, Flask, Flask-RESTful, Flask-CORS |
+| ML/Model     | scikit-learn, pandas, numpy, joblib |
+| Hosting Dev  | Localhost (Flask server)       |
+
+---
